@@ -1,0 +1,39 @@
+# Node.js 依赖
+node_modules/
+
+# 构建输出目录
+dist/
+build/
+
+# 环境变量文件
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# 日志文件
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 编辑器配置和缓存
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.temp
+
+# 前端框架特定缓存
+.next/
+.nuxt/
+out/
+.cache/
