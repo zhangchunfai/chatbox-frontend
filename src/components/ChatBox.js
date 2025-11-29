@@ -11,7 +11,7 @@ function ChatBox() {
     setMessages(newMessages);
 
     try {
-      const res = await fetch("http://localhost:3000/chat", {
+      const res = await fetch(process.env.REACT_APP_GRAPHQL_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: input })
