@@ -1,13 +1,12 @@
 /* 整体容器 */
 .chatbox-container {
-  max-width: 600px;
+  max-width: 100%; /* 占满屏幕宽度 */
   margin: 0 auto;
   font-family: Arial, sans-serif;
-  background-color: white; /* 保持白色背景 */
+  background-color: white;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  height: 100vh; /* 让聊天框在手机上也能自适应 */
 }
 
 /* 标题 */
@@ -19,9 +18,9 @@
 /* 消息区域 */
 .chatbox-messages {
   padding: 10px;
-  flex: 1; /* 自动填满剩余空间 */
+  flex: 1;
   overflow-y: auto;
-  margin-bottom: 10px;
+  margin-bottom: 16px; /* 输入框与消息区间隔为两个输入框高度 */
   display: flex;
   flex-direction: column;
 }
@@ -30,19 +29,23 @@
 .message {
   margin: 5px 0;
   display: flex;
-  max-width: 80%;
   word-wrap: break-word;
 }
 
-/* AI 消息在左边 */
+/* AI 消息紧贴最左边 */
 .message.ai {
   align-self: flex-start;
   color: #333;
+  max-width: 83.33%; /* 占屏幕 5/6 */
+  text-align: left;
 }
 
-/* 用户消息在右边，浅黄色框框 */
+/* 用户消息靠近右边，但留出 1/6 空白 */
 .message.user {
   align-self: flex-end;
+  max-width: 83.33%; /* 占屏幕 5/6 */
+  text-align: right;
+  margin-right: 16.6%; /* 留出 1/6 空白 */
 }
 
 .message.user .text {
@@ -76,10 +79,13 @@
 /* 响应式布局：手机屏幕时自动缩小 */
 @media (max-width: 768px) {
   .chatbox-container {
-    max-width: 100%;
     padding: 5px;
   }
-  .chatbox-messages {
-    height: 70vh; /* 手机上自动缩放 */
+  .message.ai,
+  .message.user {
+    max-width: 90%; /* 手机上更宽一些 */
+  }
+  .message.user {
+    margin-right: 10%; /* 手机上留出 1/10 空白 */
   }
 }
