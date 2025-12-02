@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import "./ChatBox.css"; // 引入同级的样式文件
 
 function ChatBox() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
+  const messagesEndRef = useRef(null);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -26,23 +28,48 @@ function ChatBox() {
     setInput("");
   };
 
+  // 回车键发送
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
+  // 自动滚动到底部
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
-    <div style={{ maxWidth: "500px", margin: "0 auto", fontFamily: "Arial" }}>
-      <h1>Chatbox Demo</h1>
-      <div style={{ border: "1px solid #ccc", padding: "10px", height: "300px", overflowY: "scroll", marginBottom: "10px" }}>
+    <div className="chatbox-container">
+      <h1 className="chatbox-title">Chatbox Demo</h1>
+      <div className="chatbox-messages">
         {messages.map((msg, i) => (
-          <p key={i}><b>{msg.sender}:</b> {msg.text}</p>
+          <div
+            key={i}
+            className={`message ${
+              msg.sender === "你"
+                ? "user"
+                : msg.sender === "AI"
+                ? "ai"
+                : "system"
+            }`}
+          >
+            <span className="sender">{msg.sender}:</span>
+            <span className="text">{msg.text}</span>
+          </div>
         ))}
+        <div ref={messagesEndRef} />
       </div>
-      <input
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        placeholder="输入消息..."
-        style={{ width: "70%", padding: "5px" }}
-      />
-      <button onClick={sendMessage} style={{ marginLeft: "10px", padding: "5px 10px" }}>
-        发送
-      </button>
+      <div className="chatbox-input">
+        <input
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyPress={handleKeyPress}
+          placeholder="输入消息..."
+        />
+        <button onClick={sendMessage}>发送</button>
+      </div>
     </div>
   );
 }
